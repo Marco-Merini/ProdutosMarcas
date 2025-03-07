@@ -52,9 +52,9 @@ namespace ApiProdutosPessoas.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ProdutoModel> AdicionarProduto([FromBody] ProdutoModel produtoModel)
+        public async Task<ActionResult<ProdutoModel>> AdicionarProduto([FromBody] ProdutoModel produtoModel)
         {
-            ProdutoModel produto = _produtoRepositorio.AdicionarProduto(produtoModel);
+            ProdutoModel produto = await _produtoRepositorio.AdicionarProduto(produtoModel);
             return Ok(produto);
         }
 

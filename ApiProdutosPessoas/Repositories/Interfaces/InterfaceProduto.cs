@@ -10,7 +10,7 @@ namespace ApiProdutosPessoas.Repositories.Interfaces
     {
         Task<List<ProdutoModel>> BuscarTodosProdutos();
         Task<ProdutoModel> BuscarIDProduto(int id);
-        ProdutoModel AdicionarProduto(ProdutoModel produto);
+        Task<ProdutoModel> AdicionarProduto(ProdutoModel produto);
         Task<ProdutoModel> AtualizarProduto(ProdutoModel produto, int id);
         Task<bool> DeletarProduto(int id);
         Task<List<ProdutoModel>> BuscarProdutosPorMarca(int marcaId);

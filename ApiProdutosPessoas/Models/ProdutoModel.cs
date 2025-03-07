@@ -13,11 +13,17 @@ namespace ApiProdutosPessoas.Models
         [Key]
         [Column("Codigo")]
         public int Codigo { get; set; }
+
         [Column("Descricao")]
         public string Descricao { get; set; }
+
         [Column("Estoque")]
         public int Estoque { get; set; }
+
         [Column("Cod_Marca")]
+        [ForeignKey("Marca")]
         public int CodigoMarca { get; set; }
+
+        public MarcaModel Marca { get; set; }
     }
 }

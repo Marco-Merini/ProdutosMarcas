@@ -13,7 +13,7 @@ namespace ApiProdutosPessoas.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class MarcaController : ControllerBase
     {
         private readonly InterfaceMarca _marcaRepositorio;
@@ -27,22 +27,22 @@ namespace ApiProdutosPessoas.Controllers
         public async Task<ActionResult<MarcaModel>> AdicionarMarca([FromBody] MarcaModel marcaModel)
         {
             // Verifica se a marca já existe
-            var marcaExistente = await _marcaRepositorio.BuscarIDMarca(marcaModel.Codigo);
+            var marcaExistente = await _marcaRepositorio.BuscarIDMarca(marcaModel.CodigoMarca);
 
             if (marcaExistente != null)
             {
-                return BadRequest($"Marca com código {marcaModel.Codigo} já existe.");
+                return BadRequest($"Marca com código {marcaModel.CodigoMarca} já existe.");
             }
 
             // Adiciona a nova marca
             MarcaModel marca = await _marcaRepositorio.AdicionarMarca(marcaModel);
-            return CreatedAtAction(nameof(BuscarIDMarca), new { id = marca.Codigo }, marca);
+            return CreatedAtAction(nameof(BuscarIDMarca), new { id = marca.CodigoMarca }, marca);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<MarcaModel>> AtualizarMarca([FromBody] MarcaModel marcaModel, int id)
         {
-            marcaModel.Codigo = id;
+            marcaModel.CodigoMarca = id;
             MarcaModel marca = await _marcaRepositorio.AtualizarMarca(marcaModel, id);
             return Ok(marca);
         }

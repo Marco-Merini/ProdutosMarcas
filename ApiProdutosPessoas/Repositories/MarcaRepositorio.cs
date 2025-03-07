@@ -21,11 +21,11 @@ namespace ApiProdutosPessoas.Repositories
         public async Task<MarcaModel> AdicionarMarca(MarcaModel marca)
         {
             var marcaExistente = await _dbContext.Marcas
-                                                 .FirstOrDefaultAsync(m => m.Codigo == marca.Codigo);
+                                                 .FirstOrDefaultAsync(m => m.CodigoMarca == marca.CodigoMarca);
 
             if (marcaExistente != null)
             {
-                throw new Exception($"Marca com código {marca.Codigo} já existe.");
+                throw new Exception($"Marca com código {marca.CodigoMarca} já existe.");
             }
 
             await _dbContext.Marcas.AddAsync(marca);
@@ -36,19 +36,19 @@ namespace ApiProdutosPessoas.Repositories
 
         public async Task<MarcaModel> BuscarIDMarca(int id)
         {
-            return await _dbContext.Marcas.FirstOrDefaultAsync(m => m.Codigo == id);
+            return await _dbContext.Marcas.FirstOrDefaultAsync(m => m.CodigoMarca == id);
         }
 
         public async Task<MarcaModel> AtualizarMarca(MarcaModel marca, int id)
         {
-            var marcaExistente = await _dbContext.Marcas.FirstOrDefaultAsync(m => m.Codigo == id);
+            var marcaExistente = await _dbContext.Marcas.FirstOrDefaultAsync(m => m.CodigoMarca == id);
 
             if (marcaExistente == null)
             {
                 throw new Exception($"Marca com ID {id} não encontrada.");
             }
 
-            marcaExistente.Descricao = marca.Descricao;
+            marcaExistente.DescricaoMarca = marca.DescricaoMarca;
 
             _dbContext.Marcas.Update(marcaExistente);
             await _dbContext.SaveChangesAsync();
@@ -61,7 +61,7 @@ namespace ApiProdutosPessoas.Repositories
             var produtos = _dbContext.Produtos.Where(p => p.Codigo == id);
             _dbContext.Produtos.RemoveRange(produtos);
 
-            var marca = await _dbContext.Marcas.FirstOrDefaultAsync(x => x.Codigo == id);
+            var marca = await _dbContext.Marcas.FirstOrDefaultAsync(x => x.CodigoMarca == id);
 
             if (marca == null)
             {

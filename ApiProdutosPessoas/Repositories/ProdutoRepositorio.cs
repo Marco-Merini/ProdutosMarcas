@@ -28,11 +28,10 @@ namespace ApiProdutosPessoas.Repositories
             return await _dbContext.Produtos.FirstOrDefaultAsync(x => x.Codigo == id);
         }
 
-        public ProdutoModel AdicionarProduto(ProdutoModel produto)
+        public async Task<ProdutoModel> AdicionarProduto(ProdutoModel produto)
         {
-            _dbContext.Produtos.Add(produto);
-            _dbContext.SaveChanges();
-
+            await _dbContext.Produtos.AddAsync(produto);
+            await _dbContext.SaveChangesAsync();
             return produto;
         }
 
@@ -73,16 +72,17 @@ namespace ApiProdutosPessoas.Repositories
         {
             return await _dbContext.Produtos
                 .Where(p => p.CodigoMarca == marcaId)
+                .Include(p => p.Marca)
                 .ToListAsync();
         }
 
         public async Task<List<ProdutoModel>> BuscarProdutosPorDescricao(string descricao)
         {
-            var marcas = _dbContext.Marcas.ToList();
-
             return await _dbContext.Produtos
-                .Where(p => p.Marca.Descricao.Contains(descricao))
+                .Include(p => p.Marca)
+                .Where(p => p.Marca.DescricaoMarca.Contains(descricao))
                 .ToListAsync();
         }
+
     }
 }
