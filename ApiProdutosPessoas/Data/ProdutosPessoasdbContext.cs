@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ApiProdutosPessoas.Data
 {
-    public class TesteApidbContext : DbContext
+    public class ProdutosPessoasdbContext : DbContext
     {
-        public TesteApidbContext(DbContextOptions<TesteApidbContext> options)
+        public ProdutosPessoasdbContext(DbContextOptions<ProdutosPessoasdbContext> options)
             : base(options)
         {
         }
@@ -20,13 +20,12 @@ namespace ApiProdutosPessoas.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            //modelBuilder.Entity<ProdutoModel>()   
-            //    .HasOne(p => p.Marca)
-            //    .WithMany()
-            //    .HasForeignKey(p => p.Codigo)
-            //    .HasPrincipalKey(m => m.CodigoMarca)
-            //    .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ProdutoModel>()
+                .HasOne(p => p.Marca)
+                .WithMany()
+                .HasForeignKey(p => p.Codigo)
+                .HasPrincipalKey(m => m.Codigo)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.ApplyConfiguration(new ProdutoMap());
             modelBuilder.ApplyConfiguration(new MarcaMap());

@@ -11,9 +11,9 @@ namespace ApiProdutosPessoas.Repositories
 {
     public class MarcaRepositorio : InterfaceMarca
     {
-        private readonly TesteApidbContext _dbContext;
+        private readonly ProdutosPessoasdbContext _dbContext;
 
-        public MarcaRepositorio(TesteApidbContext produtosPessoasDBContext)
+        public MarcaRepositorio(ProdutosPessoasdbContext produtosPessoasDBContext)
         {
             _dbContext = produtosPessoasDBContext;
         }
@@ -21,11 +21,11 @@ namespace ApiProdutosPessoas.Repositories
         public async Task<MarcaModel> AdicionarMarca(MarcaModel marca)
         {
             var marcaExistente = await _dbContext.Marcas
-                                                 .FirstOrDefaultAsync(m => m.CodigoMarca == marca.CodigoMarca);
+                                                 .FirstOrDefaultAsync(m => m.Codigo == marca.Codigo);
 
             if (marcaExistente != null)
             {
-                throw new Exception($"Marca com código {marca.CodigoMarca} já existe.");
+                throw new Exception($"Marca com código {marca.Codigo} já existe.");
             }
 
             await _dbContext.Marcas.AddAsync(marca);
@@ -36,19 +36,19 @@ namespace ApiProdutosPessoas.Repositories
 
         public async Task<MarcaModel> BuscarIDMarca(int id)
         {
-            return await _dbContext.Marcas.FirstOrDefaultAsync(m => m.CodigoMarca == id);
+            return await _dbContext.Marcas.FirstOrDefaultAsync(m => m.Codigo == id);
         }
 
         public async Task<MarcaModel> AtualizarMarca(MarcaModel marca, int id)
         {
-            var marcaExistente = await _dbContext.Marcas.FirstOrDefaultAsync(m => m.CodigoMarca == id);
+            var marcaExistente = await _dbContext.Marcas.FirstOrDefaultAsync(m => m.Codigo == id);
 
             if (marcaExistente == null)
             {
                 throw new Exception($"Marca com ID {id} não encontrada.");
             }
 
-            marcaExistente.DescricaoMarca = marca.DescricaoMarca;
+            marcaExistente.Descricao = marca.Descricao;
 
             _dbContext.Marcas.Update(marcaExistente);
             await _dbContext.SaveChangesAsync();
@@ -61,7 +61,7 @@ namespace ApiProdutosPessoas.Repositories
             var produtos = _dbContext.Produtos.Where(p => p.Codigo == id);
             _dbContext.Produtos.RemoveRange(produtos);
 
-            var marca = await _dbContext.Marcas.FirstOrDefaultAsync(x => x.CodigoMarca == id);
+            var marca = await _dbContext.Marcas.FirstOrDefaultAsync(x => x.Codigo == id);
 
             if (marca == null)
             {

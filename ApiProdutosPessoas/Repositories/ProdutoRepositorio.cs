@@ -11,9 +11,9 @@ namespace ApiProdutosPessoas.Repositories
 {
     public class ProdutoRepositorio : InterfaceProduto
     {
-        private readonly TesteApidbContext _dbContext;
+        private readonly ProdutosPessoasdbContext _dbContext;
 
-        public ProdutoRepositorio(TesteApidbContext produtosPessoasDBContext)
+        public ProdutoRepositorio(ProdutosPessoasdbContext produtosPessoasDBContext)
         {
             _dbContext = produtosPessoasDBContext;
         }
@@ -71,18 +71,15 @@ namespace ApiProdutosPessoas.Repositories
         public async Task<List<ProdutoModel>> BuscarProdutosPorMarca(int marcaId)
         {
             return await _dbContext.Produtos
-                .Where(p => p.CodigoMarca == marcaId)
-                .Include(p => p.Marca)
+                .Where(p => p.Marca.Codigo == marcaId)
                 .ToListAsync();
         }
 
         public async Task<List<ProdutoModel>> BuscarProdutosPorDescricao(string descricao)
         {
             return await _dbContext.Produtos
-                .Include(p => p.Marca)
-                .Where(p => p.Marca.DescricaoMarca.Contains(descricao))
+                .Where(p => p.Marca.Descricao.Contains(descricao))
                 .ToListAsync();
         }
-
     }
 }

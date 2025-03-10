@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BfdwZN0PPeDp+tgc5o4TQg0OAeUZguclWfqZrZiBPRQcQZ7B/Fv+8VhFS1e5UoF+korGtF5KPMCOQOigo1oqYQ==",
+  "dgSpecHash": "tGhRSKVz2gsiDIRcjUiT2HMjt2hXJEMbW0QpGpDprZluWTcA5D5p2HVkXL0Bw/SspzQWhCe5F8aKBFfe5uoVEw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Marco\\Documents\\testes\\teste-api\\teste-ApiProdutosPessoas\\ApiProdutosPessoas\\ApiProdutosPessoas.csproj",
+  "projectFilePath": "C:\\Users\\Marco\\Documents\\testes\\teste-api\\teste-ApiProdutosPessoas\\ApiProdutosPessoas\\ApiProdutosPessoas_Test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Marco\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Marco\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.0\\microsoft.aspnetcore.authentication.jwtbearer.5.0.0.nupkg.sha512",

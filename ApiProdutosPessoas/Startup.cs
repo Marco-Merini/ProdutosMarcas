@@ -9,9 +9,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using ApiProdutosPessoas.Data;
 using ApiProdutosPessoas.Repositories.Interfaces;
 using ApiProdutosPessoas.Repositories;
-using ApiProdutosPessoas.Data;
 
 namespace ApiProdutosPessoas
 {
@@ -24,25 +25,30 @@ namespace ApiProdutosPessoas
 
         public IConfiguration Configuration { get; }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TesteApidbContext>(options =>
+            // Configuração do DbContext
+            services.AddDbContext<ProdutosPessoasdbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             services.AddScoped<InterfaceMarca, MarcaRepositorio>();
             services.AddScoped<InterfaceProduto, ProdutoRepositorio>();
 
+            // Adicionando controllers
             services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
             });
 
+            // Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Produtos e Pessoas API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Produtos e Pessoas API TEST", Version = "v1" });
             });
         }
 
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -56,9 +62,7 @@ namespace ApiProdutosPessoas
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
-
+            // Mapear controllers
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -5559,9 +5559,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Marco\\Documents\\testes\\teste-api\\teste-ApiProdutosPessoas\\ApiProdutosPessoas\\ApiProdutosPessoas.csproj",
-      "projectName": "ApiProdutosPessoas",
-      "projectPath": "C:\\Users\\Marco\\Documents\\testes\\teste-api\\teste-ApiProdutosPessoas\\ApiProdutosPessoas\\ApiProdutosPessoas.csproj",
+      "projectUniqueName": "C:\\Users\\Marco\\Documents\\testes\\teste-api\\teste-ApiProdutosPessoas\\ApiProdutosPessoas\\ApiProdutosPessoas_Test.csproj",
+      "projectName": "ApiProdutosPessoas_Test",
+      "projectPath": "C:\\Users\\Marco\\Documents\\testes\\teste-api\\teste-ApiProdutosPessoas\\ApiProdutosPessoas\\ApiProdutosPessoas_Test.csproj",
       "packagesPath": "C:\\Users\\Marco\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Marco\\Documents\\testes\\teste-api\\teste-ApiProdutosPessoas\\ApiProdutosPessoas\\obj\\",
       "projectStyle": "PackageReference",
