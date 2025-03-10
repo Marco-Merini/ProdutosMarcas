@@ -61,7 +61,7 @@ namespace ApiProdutosPessoas.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<ProdutoModel>> AtualizarProduto([FromBody] ProdutoModel produtoModel, int id)
         {
-            produtoModel.Codigo = id;
+            produtoModel.CodigoProduto = id;
             ProdutoModel produto = await _produtoRepositorio.AtualizarProduto(produtoModel, id);
             return Ok(produto);
         }

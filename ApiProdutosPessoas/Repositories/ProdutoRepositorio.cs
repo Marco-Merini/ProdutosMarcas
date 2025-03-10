@@ -25,7 +25,7 @@ namespace ApiProdutosPessoas.Repositories
 
         public async Task<ProdutoModel> BuscarIDProduto(int id)
         {
-            return await _dbContext.Produtos.FirstOrDefaultAsync(x => x.Codigo == id);
+            return await _dbContext.Produtos.FirstOrDefaultAsync(x => x.CodigoProduto == id);
         }
 
         public async Task<ProdutoModel> AdicionarProduto(ProdutoModel produto)
@@ -43,9 +43,9 @@ namespace ApiProdutosPessoas.Repositories
             {
                 throw new Exception($"Produto para o ID: {id} não foi encontrado no banco de dados.");
             }
-            produtoId.Descricao = produto.Descricao;
-            produtoId.Codigo = produto.Codigo;
-            produtoId.Estoque = produto.Estoque;
+            produtoId.DescricaoProduto = produto.DescricaoProduto;
+            produtoId.CodigoProduto = produto.CodigoProduto;
+            produtoId.EstoqueProduto = produto.EstoqueProduto;
 
             _dbContext.Produtos.Update(produtoId);
             await _dbContext.SaveChangesAsync();
@@ -71,14 +71,14 @@ namespace ApiProdutosPessoas.Repositories
         public async Task<List<ProdutoModel>> BuscarProdutosPorMarca(int marcaId)
         {
             return await _dbContext.Produtos
-                .Where(p => p.Marca.Codigo == marcaId)
+                .Where(p => p.Marca.CodigoMarca == marcaId)
                 .ToListAsync();
         }
 
         public async Task<List<ProdutoModel>> BuscarProdutosPorDescricao(string descricao)
         {
             return await _dbContext.Produtos
-                .Where(p => p.Marca.Descricao.Contains(descricao))
+                .Where(p => p.Marca.DescricaoMarca.Contains(descricao))
                 .ToListAsync();
         }
     }

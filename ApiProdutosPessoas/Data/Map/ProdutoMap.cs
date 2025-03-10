@@ -12,12 +12,9 @@ namespace ApiProdutosPessoas.Data.Map
     {
         public void Configure(EntityTypeBuilder<ProdutoModel> builder)
         {
-            builder.HasKey(x => x.Codigo);
-            builder.Property(x => x.Descricao)
-                .IsRequired()
-                .HasMaxLength(255)
-                .IsUnicode();
-            builder.Property(x => x.Estoque).IsRequired();
+            builder.HasKey(x => x.CodigoProduto);
+            builder.Property(x => x.DescricaoProduto).IsRequired().HasMaxLength(255).IsUnicode();
+            builder.Property(x => x.EstoqueProduto).IsRequired();
         }
     }
 }

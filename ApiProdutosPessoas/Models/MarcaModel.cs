@@ -9,7 +9,7 @@ namespace ApiProdutosPessoas.Models
     public class MarcaModel
     {
         [Key]
-        public int Codigo { get; set; }
-        public string Descricao { get; set; }
+        public int CodigoMarca { get; set; }
+        public string DescricaoMarca { get; set; }
     }
 }

@@ -7,9 +7,9 @@ namespace ApiProdutosPessoas.Models
 {
     public class ProdutoModel
     {
-        public int Codigo { get; set; }
-        public string Descricao { get; set; }
+        public int CodigoProduto { get; set; }
+        public string DescricaoProduto { get; set; }
         public MarcaModel Marca { get; set; }
-        public int Estoque { get; set; }
+        public int EstoqueProduto { get; set; }
     }
 }

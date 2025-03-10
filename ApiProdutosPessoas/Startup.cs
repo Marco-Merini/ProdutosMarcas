@@ -25,30 +25,25 @@ namespace ApiProdutosPessoas
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Configuração do DbContext
             services.AddDbContext<ProdutosPessoasdbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             services.AddScoped<InterfaceMarca, MarcaRepositorio>();
             services.AddScoped<InterfaceProduto, ProdutoRepositorio>();
 
-            // Adicionando controllers
             services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
             });
 
-            // Swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Produtos e Pessoas API TEST", Version = "v1" });
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -62,7 +57,6 @@ namespace ApiProdutosPessoas
 
             app.UseRouting();
 
-            // Mapear controllers
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

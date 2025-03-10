@@ -12,8 +12,8 @@ namespace ApiProdutosPessoas.Data.Map
     {
         public void Configure(EntityTypeBuilder<MarcaModel> builder)
         {
-            builder.HasKey(x => x.Codigo);
-            builder.Property(x => x.Descricao);
+            builder.HasKey(c => c.CodigoMarca);
+            builder.Property(d => d.DescricaoMarca).IsRequired().IsUnicode();
         }
     }
 }
