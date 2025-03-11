@@ -16,7 +16,6 @@ namespace ApiProdutosPessoas.Data.Map
             builder.Property(x => x.DescricaoProduto).IsRequired().HasMaxLength(255).IsUnicode();
             builder.Property(x => x.EstoqueProduto).IsRequired();
 
-            // Configuração da chave estrangeira usando CodigoMarca diretamente
             builder.HasOne(x => x.Marca)
                    .WithMany()
                    .HasForeignKey(x => x.CodigoMarca);
