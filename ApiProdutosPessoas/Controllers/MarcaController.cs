@@ -1,8 +1,10 @@
-﻿using ApiProdutosPessoas.Models;
+﻿using ApiProdutosPessoas.Data;
+using ApiProdutosPessoas.Models;
 using ApiProdutosPessoas.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +61,7 @@ namespace ApiProdutosPessoas.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> DeletarMarca(int id)
+        public async Task<ActionResult<MarcaModel>> DeletarMarca(int id)
         {
             bool deletar = await _marcaRepositorio.DeletarMarca(id);
             return Ok(deletar);

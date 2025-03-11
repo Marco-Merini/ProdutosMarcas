@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ApiProdutosPessoas.Data
 {
-    public class ProdutosPessoasdbContext : DbContext
+    public class TESTE_API : DbContext
     {
-        public ProdutosPessoasdbContext(DbContextOptions<ProdutosPessoasdbContext> options)
+        public TESTE_API(DbContextOptions<TESTE_API> options)
             : base(options)
         {
         }

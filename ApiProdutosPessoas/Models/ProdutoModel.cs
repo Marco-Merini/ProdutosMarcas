@@ -9,7 +9,9 @@ namespace ApiProdutosPessoas.Models
     {
         public int CodigoProduto { get; set; }
         public string DescricaoProduto { get; set; }
-        public MarcaModel Marca { get; set; }
         public int EstoqueProduto { get; set; }
+        public int MarcaId { get; set; }  // Adicionar esta propriedade para o ID da marca
+        public MarcaModel Marca { get; set; }
+
     }
 }
