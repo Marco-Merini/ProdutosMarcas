@@ -20,12 +20,8 @@ namespace ApiProdutosPessoas.Repositories
 
         public async Task<MarcaModel> AdicionarMarca(MarcaModel marca)
         {
-            var marcaExistente = await _dbContext.Marcas.FirstOrDefaultAsync(m => m.CodigoMarca == marca.CodigoMarca);
-
-            if (marcaExistente != null)
-            {
-                throw new Exception($"Marca com código {marca.CodigoMarca} já existe.");
-            }
+            // Gera um código aleatório único
+            marca.CodigoMarca = await CodeGenerator.GenerateUniqueBrandCode(_dbContext);
 
             await _dbContext.Marcas.AddAsync(marca);
             await _dbContext.SaveChangesAsync();
