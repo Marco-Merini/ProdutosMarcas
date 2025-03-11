@@ -20,8 +20,6 @@ namespace ApiProdutosPessoas.Repositories
 
         public async Task<MarcaModel> AdicionarMarca(MarcaModel marca)
         {
-            // Gera um código aleatório único
-            marca.CodigoMarca = await CodeGenerator.GenerateUniqueBrandCode(_dbContext);
 
             await _dbContext.Marcas.AddAsync(marca);
             await _dbContext.SaveChangesAsync();
@@ -59,7 +57,7 @@ namespace ApiProdutosPessoas.Repositories
 
         public async Task<bool> DeletarMarca(int id)
         {
-            var produtos = _dbContext.Produtos.Where(p => p.CodigoProduto == id);
+            var produtos = _dbContext.Produtos.Where(p => p.CodigoMarca == id);
             _dbContext.Produtos.RemoveRange(produtos);
 
             var marca = await _dbContext.Marcas.FirstOrDefaultAsync(x => x.CodigoMarca == id);
