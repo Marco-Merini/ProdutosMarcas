@@ -12,13 +12,15 @@ namespace ApiProdutosPessoas.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CodigoProduto { get; set; }
+
+        [Required(ErrorMessage = "A descrição do produto é obrigatória")]
         public string DescricaoProduto { get; set; }
+
         public int EstoqueProduto { get; set; }
 
-        // Relação direta usando CodigoMarca
-        public int CodigoMarca { get; set; }  // Esta é a chave estrangeira
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CodigoMarca { get; set; }
 
-        // Propriedade de navegação
         public MarcaModel Marca { get; set; }
     }
 }

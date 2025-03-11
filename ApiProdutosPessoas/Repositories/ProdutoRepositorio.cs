@@ -41,23 +41,35 @@ namespace ApiProdutosPessoas.Repositories
 
         public async Task<ProdutoModel> AtualizarProduto(ProdutoModel produto, int id)
         {
-            ProdutoModel produtoId = await BuscarIDProduto(id);
-
-            if (produtoId == null)
+            // Busca o produto pelo ID
+            ProdutoModel produtoExistente = await BuscarIDProduto(id);
+            if (produtoExistente == null)
             {
                 throw new Exception($"Produto para o ID: {id} não foi encontrado no banco de dados.");
             }
 
-            produtoId.DescricaoProduto = produto.DescricaoProduto;
-            produtoId.CodigoProduto = produto.CodigoProduto;
-            produtoId.EstoqueProduto = produto.EstoqueProduto;
-            produtoId.CodigoMarca = produto.CodigoMarca;  // Atualizar a referência da marca
+            // (Opcional) Valida se a marca existe
+            bool marcaExiste = await _dbContext.Marcas.AnyAsync(m => m.CodigoMarca == produto.CodigoMarca);
+            if (!marcaExiste)
+            {
+                throw new Exception($"Marca com o código {produto.CodigoMarca} não foi encontrada.");
+            }
 
-            _dbContext.Produtos.Update(produtoId);
+            // Atualiza os campos do produto
+            produtoExistente.DescricaoProduto = produto.DescricaoProduto;
+            // Não altere a chave primária (CodigoProduto) se não for intencional
+            produtoExistente.EstoqueProduto = produto.EstoqueProduto;
+            produtoExistente.CodigoMarca = produto.CodigoMarca; // Atualiza a referência da marca
+
+            // (Opcional) Atualiza a propriedade de navegação
+            produtoExistente.Marca = await _dbContext.Marcas.FirstOrDefaultAsync(m => m.CodigoMarca == produto.CodigoMarca);
+
+            _dbContext.Produtos.Update(produtoExistente);
             await _dbContext.SaveChangesAsync();
 
-            return produtoId;
+            return produtoExistente;
         }
+
 
         public async Task<bool> DeletarProduto(int id)
         {

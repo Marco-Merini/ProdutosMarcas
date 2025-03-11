@@ -64,6 +64,10 @@ namespace ApiProdutosPessoas.Controllers
         public async Task<ActionResult<ProdutoModel>> AdicionarProduto([FromBody] ProdutoModel produtoModel)
         {
             ProdutoModel produto = await _produtoRepositorio.AdicionarProduto(produtoModel);
+
+            await _dbContext.Entry(produto)
+                .Reference(p => p.Marca)
+                .LoadAsync();
             return Ok(produto);
         }
 

@@ -26,6 +26,12 @@ namespace ApiProdutosPessoas.Repositories
             await _dbContext.Marcas.AddAsync(marca);
             await _dbContext.SaveChangesAsync();
 
+            if (string.IsNullOrWhiteSpace(marca.DescricaoMarca))
+            {
+                throw new ArgumentException("A descrição da marca não pode ser nula ou vazia.");
+            }
+
+
             return marca;
         }
 
