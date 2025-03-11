@@ -27,7 +27,7 @@ namespace ApiProdutosPessoas
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ProdutosPessoasdbContext>(options =>
+            services.AddDbContext<TESTE_API>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             services.AddScoped<InterfaceMarca, MarcaRepositorio>();

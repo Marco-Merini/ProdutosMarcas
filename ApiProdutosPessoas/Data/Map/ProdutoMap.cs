@@ -15,6 +15,8 @@ namespace ApiProdutosPessoas.Data.Map
             builder.HasKey(x => x.CodigoProduto);
             builder.Property(x => x.DescricaoProduto).IsRequired().HasMaxLength(255).IsUnicode();
             builder.Property(x => x.EstoqueProduto).IsRequired();
+
+            builder.HasOne(x => x.Marca).WithMany().HasForeignKey(x => x.MarcaId);
         }
     }
 }

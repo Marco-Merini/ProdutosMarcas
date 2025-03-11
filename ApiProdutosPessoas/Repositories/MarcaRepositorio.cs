@@ -11,9 +11,9 @@ namespace ApiProdutosPessoas.Repositories
 {
     public class MarcaRepositorio : InterfaceMarca
     {
-        private readonly ProdutosPessoasdbContext _dbContext;
+        private readonly TESTE_API _dbContext;
 
-        public MarcaRepositorio(ProdutosPessoasdbContext produtosPessoasDBContext)
+        public MarcaRepositorio(TESTE_API produtosPessoasDBContext)
         {
             _dbContext = produtosPessoasDBContext;
         }

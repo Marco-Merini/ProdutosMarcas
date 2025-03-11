@@ -1,8 +1,10 @@
-﻿using ApiProdutosPessoas.Models;
+﻿using ApiProdutosPessoas.Data;
+using ApiProdutosPessoas.Models;
 using ApiProdutosPessoas.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,38 +19,45 @@ namespace ApiProdutosPessoas.Controllers
     public class ProdutoController : ControllerBase
     {
         private readonly InterfaceProduto _produtoRepositorio;
+        private readonly TESTE_API _dbContext;
 
-        public ProdutoController(InterfaceProduto produtoRepositorio)
+        public ProdutoController(InterfaceProduto produtoRepositorio, TESTE_API dbContext)
         {
-            _produtoRepositorio = produtoRepositorio;
+            _produtoRepositorio = produtoRepositorio ?? throw new ArgumentNullException(nameof(produtoRepositorio));
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
         [HttpGet]
         public async Task<ActionResult<List<ProdutoModel>>> BuscarTodosProdutos()
         {
-            List<ProdutoModel> produto = await _produtoRepositorio.BuscarTodosProdutos();
-            return Ok(produto);
+            var produtos = await _dbContext.Produtos.ToListAsync();
+            return Ok(produtos);
         }
 
         [HttpGet("marca/{marcaId}")]
-        public async Task<ActionResult<List<ProdutoModel>>> BuscarProdutosPorMarca(int marcaId)
+        public async Task<List<ProdutoModel>> BuscarProdutosPorMarca(int marcaId)
         {
-            List<ProdutoModel> produtos = await _produtoRepositorio.BuscarProdutosPorMarca(marcaId);
-            return Ok(produtos);
+            return await _dbContext.Produtos
+                .Include(p => p.Marca)
+                .Where(p => p.MarcaId == marcaId)
+                .ToListAsync();
         }
 
         [HttpGet("descricao/{descricao}")]
-        public async Task<ActionResult<List<ProdutoModel>>> BuscarProdutosPorDescricao(string descricao)
+        public async Task<List<ProdutoModel>> BuscarProdutosPorDescricao(string descricao)
         {
-            List<ProdutoModel> produtos = await _produtoRepositorio.BuscarProdutosPorDescricao(descricao);
-            return Ok(produtos);
+            return await _dbContext.Produtos
+                .Include(p => p.Marca)
+                .Where(p => p.DescricaoProduto.Contains(descricao))
+                .ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProdutoModel>> BuscarIDProduto(int id)
+        public async Task<ProdutoModel> BuscarIDProduto(int id)
         {
-            ProdutoModel produto = await _produtoRepositorio.BuscarIDProduto(id);
-            return Ok(produto);
+            return await _dbContext.Produtos
+                .Include(p => p.Marca)
+                .FirstOrDefaultAsync(x => x.CodigoProduto == id);
         }
 
         [HttpPost]

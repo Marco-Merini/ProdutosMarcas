@@ -11,9 +11,9 @@ namespace ApiProdutosPessoas.Repositories
 {
     public class ProdutoRepositorio : InterfaceProduto
     {
-        private readonly ProdutosPessoasdbContext _dbContext;
+        private readonly TESTE_API _dbContext;
 
-        public ProdutoRepositorio(ProdutosPessoasdbContext produtosPessoasDBContext)
+        public ProdutoRepositorio(TESTE_API produtosPessoasDBContext)
         {
             _dbContext = produtosPessoasDBContext;
         }
@@ -43,6 +43,7 @@ namespace ApiProdutosPessoas.Repositories
             {
                 throw new Exception($"Produto para o ID: {id} não foi encontrado no banco de dados.");
             }
+
             produtoId.DescricaoProduto = produto.DescricaoProduto;
             produtoId.CodigoProduto = produto.CodigoProduto;
             produtoId.EstoqueProduto = produto.EstoqueProduto;
