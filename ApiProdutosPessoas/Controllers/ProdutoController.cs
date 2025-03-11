@@ -39,7 +39,7 @@ namespace ApiProdutosPessoas.Controllers
         {
             return await _dbContext.Produtos
                 .Include(p => p.Marca)
-                .Where(p => p.MarcaId == marcaId)
+                .Where(p => p.CodigoMarca == marcaId)
                 .ToListAsync();
         }
 

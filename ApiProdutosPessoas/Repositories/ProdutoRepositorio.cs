@@ -30,8 +30,12 @@ namespace ApiProdutosPessoas.Repositories
 
         public async Task<ProdutoModel> AdicionarProduto(ProdutoModel produto)
         {
+            // Gera um código aleatório único
+            produto.CodigoProduto = await CodeGenerator.GenerateUniqueProductCode(_dbContext);
+
             await _dbContext.Produtos.AddAsync(produto);
             await _dbContext.SaveChangesAsync();
+
             return produto;
         }
 
@@ -47,6 +51,7 @@ namespace ApiProdutosPessoas.Repositories
             produtoId.DescricaoProduto = produto.DescricaoProduto;
             produtoId.CodigoProduto = produto.CodigoProduto;
             produtoId.EstoqueProduto = produto.EstoqueProduto;
+            produtoId.CodigoMarca = produto.CodigoMarca;  // Atualizar a referência da marca
 
             _dbContext.Produtos.Update(produtoId);
             await _dbContext.SaveChangesAsync();
@@ -72,7 +77,7 @@ namespace ApiProdutosPessoas.Repositories
         public async Task<List<ProdutoModel>> BuscarProdutosPorMarca(int marcaId)
         {
             return await _dbContext.Produtos
-                .Where(p => p.Marca.CodigoMarca == marcaId)
+                .Where(p => p.CodigoMarca == marcaId)
                 .ToListAsync();
         }
 

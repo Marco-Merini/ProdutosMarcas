@@ -28,15 +28,7 @@ namespace ApiProdutosPessoas.Controllers
         [HttpPost]
         public async Task<ActionResult<MarcaModel>> AdicionarMarca([FromBody] MarcaModel marcaModel)
         {
-            // Verifica se a marca já existe
-            var marcaExistente = await _marcaRepositorio.BuscarIDMarca(marcaModel.CodigoMarca);
-
-            if (marcaExistente != null)
-            {
-                return BadRequest($"Marca com código {marcaModel.CodigoMarca} já existe.");
-            }
-
-            // Adiciona a nova marca
+            // Não precisa verificar se o código já existe, pois será gerado internamente
             MarcaModel marca = await _marcaRepositorio.AdicionarMarca(marcaModel);
             return CreatedAtAction(nameof(BuscarIDMarca), new { id = marca.CodigoMarca }, marca);
         }
