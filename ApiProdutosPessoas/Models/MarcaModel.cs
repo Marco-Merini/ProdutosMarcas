@@ -10,8 +10,12 @@ namespace ApiProdutosPessoas.Models
     public class MarcaModel
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)] // Desativa auto-incremento
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CodigoMarca { get; set; }
+
+        [Required(ErrorMessage = "A descrição da marca é obrigatória")]
         public string DescricaoMarca { get; set; }
+
+        public ProdutoModel Produto { get; set; }
     }
 }

@@ -28,7 +28,11 @@ namespace ApiProdutosPessoas.Controllers
         [HttpPost]
         public async Task<ActionResult<MarcaModel>> AdicionarMarca([FromBody] MarcaModel marcaModel)
         {
-            // Não precisa verificar se o código já existe, pois será gerado internamente
+            if (!ModelState.IsValid || string.IsNullOrWhiteSpace(marcaModel.DescricaoMarca))
+            {
+                return BadRequest("Descrição da marca é obrigatória.");
+            }
+
             MarcaModel marca = await _marcaRepositorio.AdicionarMarca(marcaModel);
             return CreatedAtAction(nameof(BuscarIDMarca), new { id = marca.CodigoMarca }, marca);
         }
